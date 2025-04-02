@@ -13,11 +13,11 @@ stage= [ '''+---+
   O   |
  /|\\ |
  /    |
-    |
+      |
 =========''','''  +---+
   |   |
   O   |
- /|\\  |
+ /|\\ |
       |
       |
 =========''',''' +---+
@@ -40,7 +40,7 @@ stage= [ '''+---+
          |
    =========''','''+---+
      |   |
-        |
+         |
          |
          |
          |
@@ -76,15 +76,15 @@ while not gameover:
     if guess  not in chosen_word:
             lives -= 1
             print (stage[lives])
-            print("****************************",lives,"/6 LIVES LEFT****************************")
+            print("(===================",lives,"/6 LIVES LEFT===================)")
             if lives == 0 :
                 gameover = True
                 print("Game Over! The correct word was:", chosen_word)
                 break
     
         
-    print("Word to be guessed")
-    print (display)
+    print("Word to be guessed",display)
+    
         
           
     
