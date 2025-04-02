@@ -1,30 +1,95 @@
 import random
-word=["mango","driving","reading","nether"]
+word = ["mango", "driving", "reading", "nether", "radian", "leave","more","endless"]
 chosen_word = random.choice(word)
-print (chosen_word)
-placeholder= str()
-for position in range(len(chosen_word)):
+
+stage= [ '''  +---+
+  |   |
+  O   |
+ //|\\  |
+ // \\  |
+      |
+=========''','''  +---+
+  |   |
+  O   |
+ //|\\  |
+ //    |
+    |
+=========''','''  +---+
+  |   |
+  O   |
+ //|\\  |
+      |
+      |
+=========''',''' +---+
+  |   |
+  O   |
+ //|   |
+      |
+      |
+=========''',''' +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========''','''+---+
+     |   |
+     O   |
+         |
+         |
+         |
+   =========''','''+---+
+     |   |
+        |
+         |
+         |
+         |
+   =========''']
+
+    
+
+placeholder = str()
+wordlength = len(chosen_word)
+for position in range(wordlength):
     placeholder += "_"
-print (placeholder)
-display = ""
+
+
 gameover = False
-lives = len(chosen_word)
+
+correctletter = []
+
+lives = 6
+print("Welcome to Hangman")
+print(placeholder)
 while not gameover:
-    newdisplay = ""
+    
+    display = ""
     guess = input("Guess a letter: ").lower()
     for letter in chosen_word:
         if letter == guess:
-            newdisplay += letter
+            display += letter
+            correctletter.append(letter)
+        elif letter in correctletter:
+            display += letter
         else:
-            newdisplay += "_"
-        display = newdisplay
-
-    print(display)
-    if "_" not in display:
-        print("You Win")
-        gameover = "true"
-    if lives <0 :
-        print("You lose")
+            display += "_"
+    if guess  not in chosen_word:
+            lives -= 1
+            print (stage[lives])
+            if lives == 0 :
+                gameover = True
+                print("Game Over! The correct word was:", chosen_word)
+                break
+    
+        
+    print("Word to be guessed")
+    print (display)
+        
+          
+    
         
 
-   
+    if "_" not in display:
+        print("You Win")
+        break
+    
