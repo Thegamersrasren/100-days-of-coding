@@ -2,28 +2,28 @@ import random
 word = ["mango", "driving", "reading", "nether", "radian", "leave","more","endless"]
 chosen_word = random.choice(word)
 
-stage= [ '''  +---+
+stage= [ '''+---+
   |   |
   O   |
- //|\\  |
- // \\  |
+ /|\\  |
+ / \\  |
       |
 =========''','''  +---+
   |   |
   O   |
- //|\\  |
- //    |
+ /|\\ |
+ /    |
     |
 =========''','''  +---+
   |   |
   O   |
- //|\\  |
+ /|\\  |
       |
       |
 =========''',''' +---+
   |   |
   O   |
- //|   |
+ /|   |
       |
       |
 =========''',''' +---+
@@ -76,6 +76,7 @@ while not gameover:
     if guess  not in chosen_word:
             lives -= 1
             print (stage[lives])
+            print("****************************",lives,"/6 LIVES LEFT****************************")
             if lives == 0 :
                 gameover = True
                 print("Game Over! The correct word was:", chosen_word)
