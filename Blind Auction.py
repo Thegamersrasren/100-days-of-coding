@@ -1,7 +1,5 @@
 import os
 
-
-
 bid = {}
 
 def highest_bidder(bidding_dictionary):
@@ -19,6 +17,7 @@ while not more:
     nAME = input("What is thy name: ")
     try:
         bid_amount = int(input("How much do you bid: $"))  # Convert to integer for proper comparison
+ 
     except ValueError:
         print("Sorry that is not a biddable value type in a number")
 

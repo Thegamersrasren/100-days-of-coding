@@ -24,8 +24,12 @@ def decrypt(word, shift):
 
 while should_continue == True:
     word = input("Type in the word: ").lower()
-    shift = int(input("How much do you want to shift by? "))
+    try:
+        shift = int(input("How much do you want to shift by? ")) 
+    except ValueError:
+        print("Error please put in a variable")
     choice = input("Would you like to encode or decode? ").lower()
+        
     if choice == "decode":
         decrypt(word, shift)
         Redo = input("Do you wish to do it again Yes or no ").lower()
