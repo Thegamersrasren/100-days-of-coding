@@ -37,14 +37,14 @@ while True:
         
         print(f"{drink['Flavours']} costs ${drink['Price']:.2f}")
         nump = float(input("How Many pennies do you wish to input "))
-        numn = float(input("How Many pNickels do you wish to input "))
-        numd = float(input("How Many dimes do you wish to input "))
+        numn = float(input("How Many Nickels do you wish to input "))
+        numd = float(input("How Many Dimes do you wish to input "))
         numq = float(input("How Many Quaters do you wish to input "))
         added = (nump * Penny) + (numn * Nickel) + (numd * Dime) + (numq * Quater)
         
         if enough({"Water": drink["Water"], "Milk": drink["Milk"], "Coffee": drink["Coffee"]}):
             if added >= drink['Price']:
-                Money += drink['Price']
+                Money += added
                 resources["Water"] -= drink["Water"]
                 resources["Coffee"] -= drink["Coffee"]
                 if drink["Milk"] > 0:

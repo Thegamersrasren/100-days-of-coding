@@ -12,7 +12,7 @@ class Quizbrain:
     def nextquestion(self):
         currentquest= self.question_list[self.question_number]
         self.question_number += 1
-        ans= input(f"q.{self.question_number}:{currentquest.text}(True/False)")
+        ans= input(f"Q.{self.question_number}:{currentquest.text}(True/False)")
         self.checkans(ans,currentquest.answer)
     def checkans(self, ans, correctanswer):
         if ans.lower() == correctanswer.lower():
