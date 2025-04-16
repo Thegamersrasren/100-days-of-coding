@@ -11,4 +11,10 @@ question_data = [
 {"text": "Buzz Aldrin's mother's maiden name was 'Moon'.", "answer": "True"},
 {"text": "No piece of square dry paper can be folded in half more than 7 times.", "answer": "False"},
 {"text": "A few ounces of chocolate can to kill a small dog.", "answer": "True"}
+{"text":"Are there more than 1000 pokemon in the National dex of gen 3", "answer":"False"}
+{"text":"Is anime Goated", "answer":"True"}
+{"text":"Are they 3 dark souls games", "answer":"True"}
+
+
+
 ]
