@@ -1,7 +1,7 @@
 import random
-word = ["mango", "driving", "reading", "nether", "radian", "leave","more","endless","wonderful","finale"]
+word = ["mango", "driving", "reading", "nether", "radian", "leave","more","endless","wonderful","finale","nigga"]
 chosen_word = random.choice(word)
-print(chosen_word)
+
 stage= [ '''+---+
   |   |
   O   |

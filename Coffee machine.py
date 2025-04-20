@@ -49,7 +49,7 @@ while True:
                 resources["Coffee"] -= drink["Coffee"]
                 if drink["Milk"] > 0:
                     resources["Milk"] -= drink["Milk"]
-                
+        
                 if added > drink['Price']:
                     change = added - drink['Price']
                     print(f"Here is your change: ${change:.2f}")
