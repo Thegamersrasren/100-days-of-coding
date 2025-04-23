@@ -1,36 +1,43 @@
-from turtle import Turtle, Screen
+from turtle import Screen
 import time
+from snake import Snake
+from Food import food
+from Score import Score
+
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.bgcolor("black")
 screen.title("Slithering Snake Game") 
 screen.tracer(0)
 
-Startingposi = [(0,0), (-20,0), (-40,0)]
-segs = []
 
-for posi in Startingposi:
-    Tim = Turtle()
-    Tim.color("white")
-    Tim.shape("square")
-    Tim.penup()
-    Tim.goto(posi)
-    segs.append(Tim)
+snakke = Snake()
+foood = food()
+score = Score()
+
+screen.listen() 
+screen.onkey(snakke.up, "Up")
+screen.onkey(snakke.down, "Down")
+screen.onkey(snakke.left, "Left")
+screen.onkey(snakke.right, "Right")
 
 game_is_on = True
 while game_is_on:
     screen.update()
     time.sleep(0.1)
-    for segments in range(len(segs) - 1, 0, -1):
-        x = segs[segments - 1].xcor()
-        y = segs[segments - 1].ycor()
-        Tom = segs[segments]
-        Tom.goto(x, y)
-    Tom[0].forward(40)
-    Tom[0].left(90)
-
-
-
-
-
+    snakke.move()
+    #detect food
+    if snakke.head.distance(foood) < 15:
+        foood.nextfood()
+        score.addscore()
+        snakke.extend()
+        #detect wall
+    if (snakke.head.xcor() > 280 or snakke.head.xcor() < -280 or 
+        snakke.head.ycor() > 280 or snakke.head.ycor() < -280):
+        game_is_on = False
+        score.fail()
+    for segment in snakke.segments[1:]:
+        if snakke.head.distance(segment) < 10:
+            game_is_on = False
+            score.fail()
 screen.exitonclick()
