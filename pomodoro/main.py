@@ -16,7 +16,6 @@ marks = ""
 window = Tk()
 window.title("Tomato")
 window.config(padx=100, pady=50, bg=YELLOW)
-window.after(1000,)
 #tomato
 tomato_img = PhotoImage(file="tomato.png")
 canvas = Canvas(width=200, height=224, bg=YELLOW, highlightthickness=0)
