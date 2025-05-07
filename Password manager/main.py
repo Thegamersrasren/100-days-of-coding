@@ -96,7 +96,7 @@ webs.grid(row=1, column=1)
 webs.focus()
 ems = Entry(width=35)
 ems.grid(row=2, column=1, columnspan=2)
-ems.insert(0, "garenagbaire@gmail.com")
+ems.insert(0, "garenaire@gmail.com")
 paswords = Entry(width=21)
 paswords.grid(row=3, column=1)
 
