@@ -69,12 +69,18 @@ def edittask(tasks, duedate):
 
         except ValueError:
             print("Invalid input. Please enter a numeric value.")
-def savetask(task, duedate_str):
+def savetask(tasks, duedate):
     if not tasks:
-        print("No tasks are in the list.")
-    else:
-        with open(r"C:\Users\garen\Documents\Project Work\Todo list\data.txt", "a") as data:
-            data.write(f"Task :{task},Due:{duedate_str}\n")
+        print("No tasks to save.")
+        return
+    
+    try:
+        with open(r"C:\Users\garen\Documents\Project Work\Todo list\data.txt", "w") as data:
+            for task, date in zip(tasks, duedate):
+                data.write(f"Task: {task}, Due: {date.strftime('%d/%m/%Y')}\n")
+        print("Tasks saved successfully!")
+    except IOError:
+        print("Error: Could not save tasks to file.")
 def donetask(tasks, duedate):
     if not tasks:
         print("No tasks have been added.")
