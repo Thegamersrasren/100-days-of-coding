@@ -60,7 +60,7 @@ def count_down(count):
     canvas.itemconfig(timertext, text=f"{count_min}:{count_sec}")
     if count> 0 :
         global worker
-        worker = window.after(10,count_down,count-1)
+        worker = window.after(1000,count_down,count-1)
     else:
         start_timer()
         global marks

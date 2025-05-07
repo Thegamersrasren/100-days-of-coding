@@ -69,6 +69,12 @@ def edittask(tasks, duedate):
 
         except ValueError:
             print("Invalid input. Please enter a numeric value.")
+def savetask(task, duedate_str):
+    if not tasks:
+        print("No tasks are in the list.")
+    else:
+        with open(r"C:\Users\garen\Documents\Project Work\Todo list\data.txt", "a") as data:
+            data.write(f"Task :{task},Due:{duedate_str}\n")
 def donetask(tasks, duedate):
     if not tasks:
         print("No tasks have been added.")
@@ -97,7 +103,8 @@ def TODOLIST():
         print("2.Show all tasks")
         print("3.Mark tasks as done")
         print("4.Edit task")
-        print("5.Exit")
+        print("5.Savetasks")
+        print("6.Exit")
 
         try:
             choice = int(input("What do you want to do: "))  
@@ -114,6 +121,8 @@ def TODOLIST():
         elif choice == 4:
             edittask(tasks, duedate)
         elif choice == 5:
+            savetask(tasks, duedate)
+        elif choice == 6:
             print("Goodbye!")
             break
         else:
