@@ -1,89 +1,71 @@
 from tkinter import *
-import pandas as pd
+import pandas
 import random
 
 BACKGROUND_COLOR = "#B1DDC6"
-words_dict = []
+current_card = {}
+to_learn = {}
 
-#-----------DATA SETUP------------#
 try:
-    words = pd.read_csv("words_to_learn.csv")  # Fixed filename to match what you save
-    words_dict = words.to_dict(orient="records")
+    data = pandas.read_csv("data/words_to_learn.csv")
 except FileNotFoundError:
-    words = pd.read_csv(r"C:\Users\garen\Documents\Project Work\Flashcard\data\french_words.csv")
-    words_dict = words.to_dict(orient="records")
+    original_data = pandas.read_csv(r"C:\Users\garen\Documents\Project Work\Tkinter\Flashcard\data\french_words.csv")
+    print(original_data)
+    to_learn = original_data.to_dict(orient="records")
+else:
+    to_learn = data.to_dict(orient="records")
 
-randomword = {"French": "", "English": ""}
-current_after_id = None  # To track the after() timer
 
-# Functions
-def failchangeword():
-    global randomword, current_after_id
-    
-    # Cancel any pending flip
-    if current_after_id:
-        window.after_cancel(current_after_id)
-    
-    if words_dict:  # Check if there are words left
-        randomword = random.choice(words_dict)
-        canvas.itemconfig(changew, text=randomword["French"], fill="black")
-        canvas.itemconfig(title, text="French", fill="black")
-        canvas.itemconfig(old, image=front_img)
-        current_after_id = window.after(3000, flip_card)
-  
-def passchangeword():
-    global randomword, current_after_id, words_dict
-    
-    # Cancel any pending flip
-    if current_after_id:
-        window.after_cancel(current_after_id)
-    
-    if words_dict:  # Check if there are words left
-        randomword = random.choice(words_dict)
-        canvas.itemconfig(changew, text=randomword["French"], fill="black")
-        canvas.itemconfig(title, text="French", fill="black")
-        canvas.itemconfig(old, image=front_img)
-        
-        # Remove the current word and save the updated list
-        words_dict.remove(randomword)
-        pd.DataFrame(words_dict).to_csv("words_to_learn.csv", index=False)  # Fixed filename and added index=False
-        
-        # Start new timer
-        current_after_id = window.after(3000, flip_card)
+def next_card():
+    global current_card, flip_timer
+    window.after_cancel(flip_timer)
+    current_card = random.choice(to_learn)
+    canvas.itemconfig(card_title, text="French", fill="black")
+    canvas.itemconfig(card_word, text=current_card["French"], fill="black")
+    canvas.itemconfig(card_background, image=card_front_img)
+    flip_timer = window.after(3000, func=flip_card)
+
 
 def flip_card():
-    global back_img
-    back_img = PhotoImage(file=r"C:\Users\garen\Documents\Project Work\Flashcard\images\card_back.png")
-    canvas.itemconfig(old, image=back_img)
-    canvas.itemconfig(title, text="English", fill="white")
-    canvas.itemconfig(changew, text=randomword["English"], fill="white")
+    canvas.itemconfig(card_title, text="English", fill="white")
+    canvas.itemconfig(card_word, text=current_card["English"], fill="white")
+    canvas.itemconfig(card_background, image=card_back_img)
 
-#-----------UI SETUP------------#
+
+def is_known():
+    to_learn.remove(current_card)
+    print(len(to_learn))
+    data = pandas.DataFrame(to_learn)
+    data.to_csv("data/words_to_learn.csv", index=False)
+    next_card()
+
+
 window = Tk()
-window.title("Flash Card")
-window.config(padx=50, pady=50, background=BACKGROUND_COLOR)
+window.title("Flashy")
+window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 
-# Images
-front_img = PhotoImage(file=r"C:\Users\garen\Documents\Project Work\Flashcard\images\card_front.png")
-back_img = PhotoImage(file=r"C:\Users\garen\Documents\Project Work\Flashcard\images\card_back.png")
-correct = PhotoImage(file=r"C:\Users\garen\Documents\Project Work\Flashcard\images\right.png")
-incorrect = PhotoImage(file=r"C:\Users\garen\Documents\Project Work\Flashcard\images\wrong.png")
+flip_timer = window.after(3000, func=flip_card)
 
-# Canvas Setup
-canvas = Canvas(width=800, height=526, background=BACKGROUND_COLOR, highlightthickness=0)
-old = canvas.create_image(400, 263, image=front_img)
-title = canvas.create_text(400, 150, text="Title", font=("Ariel", 40, "italic"))
-changew = canvas.create_text(400, 263, text="Word", font=("Ariel", 60, "bold"))
+canvas = Canvas(width=800, height=526)
+card_front_img = PhotoImage(file=r"Tkinter\Flashcard\images\card_front.png")
+card_back_img = PhotoImage(file=r"Tkinter\Flashcard\images\card_back.png")
+card_background = canvas.create_image(400, 263, image=card_front_img)
+card_title = canvas.create_text(400, 150, text="", font=("Ariel", 40, "italic"))
+card_word = canvas.create_text(400, 263, text="", font=("Ariel", 60, "bold"))
+canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
 canvas.grid(row=0, column=0, columnspan=2)
 
-# Buttons
-right = Button(image=correct, highlightthickness=0, command=passchangeword)
-right.grid(row=1, column=1)
-wrong = Button(image=incorrect, highlightthickness=0, command=failchangeword)
-wrong.grid(row=1, column=0)
+cross_image = PhotoImage(file=r"Tkinter\Flashcard\images\wrong.png")
+unknown_button = Button(image=cross_image, highlightthickness=0, command=next_card)
+unknown_button.grid(row=1, column=0)
 
-# Start with first word
+check_image = PhotoImage(file=r"Tkinter\Flashcard\images\right.png")
+known_button = Button(image=check_image, highlightthickness=0, command=is_known)
+known_button.grid(row=1, column=1)
 
+next_card()
 
-# Start the app
 window.mainloop()
+
+
+

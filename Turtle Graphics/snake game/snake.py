@@ -1,54 +1,52 @@
 from turtle import Turtle
+STARTING_POSITIONS = [(0, 0), (-20, 0), (-40, 0)]
+MOVE_DISTANCE = 20
+UP = 90
+DOWN = 270
+LEFT = 180
+RIGHT = 0
 
-Startingposi = [(0,0), (-20,0), (-40,0)]
-movedis = 20
-Up = 90
-down = 270
-left = 180
-right = 360
+
 class Snake:
+
     def __init__(self):
         self.segments = []
-        self.createsnake()
+        self.create_snake()
         self.head = self.segments[0]
-    
-    def createsnake(self):
-        for posi in Startingposi:
-           self.addsnake(posi)
-    
+
+    def create_snake(self):
+        for position in STARTING_POSITIONS:
+            self.add_segment(position)
+
+    def add_segment(self, position):
+        new_segment = Turtle("square")
+        new_segment.color("white")
+        new_segment.penup()
+        new_segment.goto(position)
+        self.segments.append(new_segment)
+
+    def extend(self):
+        self.add_segment(self.segments[-1].position())
+
     def move(self):
         for seg_num in range(len(self.segments) - 1, 0, -1):
-            x = self.segments[seg_num - 1].xcor()
-            y = self.segments[seg_num - 1].ycor()
-            self.segments[seg_num].goto(x, y)
-        self.head.forward(movedis)  # Fixed: changed self.head.segments[0] to self.head
-    
+            new_x = self.segments[seg_num - 1].xcor()
+            new_y = self.segments[seg_num - 1].ycor()
+            self.segments[seg_num].goto(new_x, new_y)
+        self.head.forward(MOVE_DISTANCE)
+
     def up(self):
-        if self.head.setheading != down:
-            self.head.setheading(Up)  # Fixed: changed setheadings to setheading
-    
+        if self.head.heading() != DOWN:
+            self.head.setheading(UP)
+
     def down(self):
-        if self.head.setheading != Up:
-            self.head.setheading(down)  # Fixed: changed setheadings to setheading
-    
+        if self.head.heading() != UP:
+            self.head.setheading(DOWN)
+
     def left(self):
-        if self.head.setheading != right:
-            self.head.setheading(left)  # Fixed: changed setheadings to setheading
-    
+        if self.head.heading() != RIGHT:
+            self.head.setheading(LEFT)
+
     def right(self):
-        if self.head.setheading != left:
-            self.head.setheading(right)  
-    def addsnake(self, posi):
-        Tim = Turtle()
-        Tim.color("white")
-        Tim.shape("square")
-        Tim.penup()
-        Tim.goto(posi)
-        self.segments.append(Tim)
-    def extend(self):
-        self.addsnake(self.segments[-1].position())
-    def reset (self):
-        for segmei in self.segments:
-            segmei.goto(1000,1000)
-        self.segments.clear()
-        self.createsnake
+        if self.head.heading() != LEFT:
+            self.head.setheading(RIGHT)
