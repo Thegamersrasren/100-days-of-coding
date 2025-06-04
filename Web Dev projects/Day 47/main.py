@@ -24,7 +24,7 @@ title = soup.find(id="productTitle").get_text().strip()
 
 
 # Set the price below which you would like to get a notification
-BUY_PRICE = 1900
+BUY_PRICE = 1200
 message = f"{title} is being sold for {float_cost}"
 if float_cost < BUY_PRICE:
       with smtplib.SMTP(os.environ["SMTP_ADDRESS"], port=587) as connection:
